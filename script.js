@@ -7,13 +7,16 @@ const box = document.getElementById("box");
 
 generate.addEventListener("click", () => {
 
-    if(input.value === "") {
+    if(input.value.trim() === "") {
         error.innerHTML = "Please enter a value";
         error.style.color = "red";
+        error.classList.remove("hide");
+        barcode.classList.add("barcode")
+        download.classList.add("hide");
     }
     else if (input.value !== "") {
-        barcode.classList.remove("barcode")
         error.classList.add("hide");
+        barcode.classList.remove("barcode")
         download.classList.remove("hide");
 
         JsBarcode("#barcode", input.value, {
@@ -23,6 +26,31 @@ generate.addEventListener("click", () => {
           height: 50,
           displayValue: true  
         });
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if(event.key === "Enter") {
+        if(input.value.trim() === "") {
+            error.innerHTML = "Please enter a value";
+            error.style.color = "red";
+            error.classList.remove("hide");
+            barcode.classList.add("barcode")
+            download.classList.add("hide");
+        }
+        else if (input.value !== "") {
+            error.classList.add("hide");
+            barcode.classList.remove("barcode")
+            download.classList.remove("hide");
+    
+            JsBarcode("#barcode", input.value, {
+              format: "code128",
+              lineColor: "#000",
+              width: 2,
+              height: 50,
+              displayValue: true  
+            });
+        }
     }
 });
 
